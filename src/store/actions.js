@@ -1,38 +1,23 @@
 import axios from 'axios';
 
-export const GET_POKEMONS="GET_POKEMONS";
+export const GET_POKEMONS = "GET_POKEMONS";
 export const INPUT = "INPUT";
-export const storeData = (pokemons) => {
-    return{ 
-       type:GET_POKEMONS,
-       pokemons: Object.assign([],pokemons.results)
+
+export const storeDataIntoPokemonsArray = (pokemons) => {
+    return {
+        type: GET_POKEMONS,
+        pokemons: Object.assign([], pokemons.results)
     };
 }
 
-export const fetchDataFromAPI = () =>{
-    return function(dispatch){
-            axios.get('https://pokeapi.co/api/v2/pokemon/')
-                .then((response) => dispatch(storeData(response.data))
+export const fetchDataFromAPI = () => {
+    return function (dispatch) {
+        axios.get('https://pokeapi.co/api/v2/pokemon/')
+            .then((response) => dispatch(storeDataIntoPokemonsArray(response.data))
             )
-            .catch(error => { 
-                 console.log(error)}
+            .catch(error => {
+                console.log(error)
+            }
             )
-    }
-}
-
-export const changeInputDelay = (value) =>{
-    return function(dispatch){
-        const timer=setTimeout(()=>dispatch(changeInput(value))
-        ,300);
-        return () => {
-            clearTimeout(timer);
-          };
-    }
-}
-
-export const changeInput = (value) =>{
-    return{
-        type:INPUT,
-        filterValue:value
     }
 }

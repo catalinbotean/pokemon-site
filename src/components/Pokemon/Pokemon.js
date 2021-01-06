@@ -1,6 +1,8 @@
 import React, { useState,useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchDataFromAPI } from '../../store/actions';
+import PokemonList from './PokemonList/PokemonList';
+
 
 function Pokemon() {
     const pokemonState=useState([]);
@@ -9,12 +11,17 @@ function Pokemon() {
     const fetchDataConst = useCallback(() => dispatch(fetchDataFromAPI()), [dispatch]);
 
     useEffect(() => { 
-        return pokemonState[1](fetchDataConst) ;
-    }, [pokemonState,fetchDataConst])
-    
+            return pokemonState[1](fetchDataConst) ;
+    }, [])
+
+    let showPokemonsCards = null;
+    if(pokemonData){
+        showPokemonsCards=pokemonData.map((pokemonElement,index) =>{ return <PokemonList key={index} name={pokemonElement.name} url={pokemonElement.url}/>});
+    }
+
     return (
         <div>
-            <div>Pokemon Data: <ul>{pokemonData.map(pokemon =>{ return <li>{pokemon.name}</li>})}</ul></div>
+            {showPokemonsCards}
         </div>
     );
 }
