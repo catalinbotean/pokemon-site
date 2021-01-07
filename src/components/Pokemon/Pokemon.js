@@ -1,17 +1,16 @@
 import React, { useState,useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchDataFromAPI } from '../../store/actions';
 import PokemonList from './PokemonList/PokemonList';
-
+import SearchBar from './SearchBar/SearchBar';
+import { fetchDataFromAPI } from '../../store/actions';
 
 function Pokemon() {
     const pokemonState=useState([]);
-    const pokemonData = useSelector(state => state.pokemonsArray);
     const dispatch = useDispatch();
+    const pokemonData = useSelector(state => state.filteredPokemonsArray);
     const fetchDataConst = useCallback(() => dispatch(fetchDataFromAPI()), [dispatch]);
-
     useEffect(() => { 
-            return pokemonState[1](fetchDataConst) ;
+            pokemonState[1](fetchDataConst) ;
     }, [])
 
     let showPokemonsCards = null;
@@ -21,7 +20,10 @@ function Pokemon() {
 
     return (
         <div>
+            <SearchBar/>
+             <div>
             {showPokemonsCards}
+        </div>
         </div>
     );
 }

@@ -3,7 +3,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const StyledDiv=styled.div`
-    border:3px solid #;
+    border:3px solid #000;
+    margin:20px;
 `;
 function PokemonList (props) {
     

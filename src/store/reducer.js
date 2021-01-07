@@ -2,24 +2,28 @@ import * as actionTypes from './actions';
 
 const initialState = {
     filterValue: '',
-    pokemonsArray: []
+    pokemonsArray: [],
+    filteredPokemonsArray:[]
 }
 
 const reducer = (state = initialState, action) => {
-    if (action.type === actionTypes.GET_POKEMONS) {
+    switch(action.type){
+        case actionTypes.GET_POKEMONS:
         return {
             ...state,
-            pokemonsArray: action.pokemons
+            pokemonsArray: action.pokemons,
+            filteredPokemonsArray: action.pokemons
         }
-    }
-    else
-        if (action.type === actionTypes.INPUT) {
+        case actionTypes.INPUT:
+            const newPokemonsArray = state.pokemonsArray.filter(pokemon=> pokemon.name.startsWith(action.filterValue));
             return {
                 ...state,
-                filterValue: action.filterValue
+                filterValue: action.filterValue,
+                filteredPokemonsArray:newPokemonsArray
             }
+        default: 
+            return state;
         }
-    return state;
 }
 
 export default reducer;
