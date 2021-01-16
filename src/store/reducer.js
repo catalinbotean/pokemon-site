@@ -3,7 +3,10 @@ import * as actionTypes from './actions';
 const initialState = {
     filterValue: '',
     pokemonsArray: [],
-    filteredPokemonsArray:[]
+    filteredPokemonsArray:[],
+    loadingData:true,
+    selectedPokemon:null,
+    loadingSelectedPokemon:true
 }
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +14,15 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_POKEMONS:
         return {
             ...state,
+            loadingData:true,
+            pokemonsArray: [],
+            filteredPokemonsArray: []
+        }
+        case actionTypes.GET_POKEMONS_SUCCESS:
+        return {
+            ...state,
+            loadingData:false,
+            loadingSelectedPokemon:true,
             pokemonsArray: action.pokemons,
             filteredPokemonsArray: action.pokemons
         }
@@ -20,6 +32,13 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 filterValue: action.filterValue,
                 filteredPokemonsArray:newPokemonsArray
+            }
+        case actionTypes.GET_SELECTED_POKEMON:
+            return{
+                ...state,
+                selectedPokemon:action.data,
+                loadingSelectedPokemon:false,
+                loadingData:true
             }
         default: 
             return state;
