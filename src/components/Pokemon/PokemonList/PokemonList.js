@@ -4,15 +4,19 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 const StyledDiv=styled.div`
-    border:3px solid #000;
-    margin:20px;
+    text-transform:uppercase;
+    color:#00ccff;
+    &:hover{
+       color:#eed603;
+     }
 `;
-function PokemonList (props) {
+
+const PokemonList=(props)=>{
     
     const setImageState=useState([]);
     const loading = useState(true);
     const load = useSelector(state => state.loadingData);
-   // const dispatch = useDispatch();
+
     useEffect(()=>{
         if(!load){
         axios.get('https://pokeapi.co/api/v2/pokemon/'+props.name)

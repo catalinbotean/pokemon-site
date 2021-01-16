@@ -4,8 +4,42 @@ import PokemonList from './PokemonList/PokemonList';
 import SearchBar from './SearchBar/SearchBar';
 import { fetchDataFromAPI } from '../../store/actions';
 import { Link } from 'react-router-dom';
- 
-function Pokemon() {
+import Title from '../Title/Title';
+import styled from 'styled-components';
+import image from '../../backgrounds.jpg';
+const StyledDiv=styled.div`
+    background-image:url(${image});
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height:100%;
+    min-width:100%;
+    position:absolute;
+`;
+
+const DivParent=styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-left:10%;
+    margin-right:10%;
+`;
+
+const DivChild=styled.div`
+  flex: 1 0 21%;
+  text-align:center; 
+  margin: 20px;
+  height: 150px;
+  max-width:21%;
+  align-self:flex-start;
+  border:4px solid #00ccff;
+  border-radius:25%;
+  background-color: #000066;
+  &:hover{
+      opacity:0.5;
+      border:4px solid #eed603;
+  }
+`;
+const Pokemon=()=>{
 
     const dispatch = useDispatch();
     const pokemonData = useSelector(state => state.filteredPokemonsArray);
@@ -20,21 +54,21 @@ function Pokemon() {
 
     let showPokemonsCards = null;
     if(pokemonData){
-        showPokemonsCards=pokemonData.map((pokemonElement,index) =>
-                    { return <Link to={'/pokemon/'+pokemonElement.name}  key={index}>
-                                    <PokemonList name={pokemonElement.name} url={pokemonElement.url}/>
-                              </Link>
-                    });
+        showPokemonsCards=<DivParent>{pokemonData.map((pokemonElement,index) =>
+                   <DivChild key={index}> <Link to={'/pokemon/'+pokemonElement.name} style={{ textDecoration: 'none' }}>
+                                   <PokemonList name={pokemonElement.name} url={pokemonElement.url}/>
+                              </Link></DivChild>
+                    )}</DivParent>
     }
 
+
     return (
-        <div>
+        <StyledDiv>
+            <Title/>
             <SearchBar/>
-             <div>
                  {loading&& <div>LOADING...</div>}
                  {!loading&&showPokemonsCards}
-        </div>
-        </div>
+        </StyledDiv>
     );
 }
 
