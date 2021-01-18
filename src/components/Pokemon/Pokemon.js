@@ -42,8 +42,9 @@ const DivChild=styled.div`
 const Pokemon=()=>{
 
     const dispatch = useDispatch();
-    const pokemonData = useSelector(state => state.filteredPokemonsArray);
+    const pokemonData = useSelector(state => state.pokemonsArray);
     const loading = useSelector(state => state.loadingData);
+    const filter = useSelector(state => state.filterValue);
 
     useEffect(() => { 
             if(loading){
@@ -54,7 +55,8 @@ const Pokemon=()=>{
 
     let showPokemonsCards = null;
     if(pokemonData){
-        showPokemonsCards=<DivParent>{pokemonData.map((pokemonElement,index) =>
+        const newPokemonsArray = pokemonData.filter(pokemon=> pokemon.name.startsWith(filter));
+        showPokemonsCards=<DivParent>{newPokemonsArray.map((pokemonElement,index) =>
                    <DivChild key={index}> <Link to={'/pokemon/'+pokemonElement.name} style={{ textDecoration: 'none' }}>
                                    <PokemonList name={pokemonElement.name} url={pokemonElement.url}/>
                               </Link></DivChild>
