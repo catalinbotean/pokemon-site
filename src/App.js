@@ -7,6 +7,7 @@ function App() {
   return (
     <BrowserRouter>
           <Route path='/' exact component={Pokemon}/>
+          
           <Route path='/pokemon/:name' exact component={PokemonDetail}/>
     </BrowserRouter>
   );
