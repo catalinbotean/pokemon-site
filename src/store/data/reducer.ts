@@ -24,10 +24,10 @@ export const reducer = (state = initialState, action: Actions) => {
         filterValue: action.filterValue,
       };
     case ActionTypes.GET_SELECTED_POKEMON:
-      console.log(action.data);
+      const {data} =action.payload;
       return {
         ...state,
-        selectedPokemon: action.data,
+        selectedPokemon: data,
         loadingSelectedPokemon: false,
         loadingData: true,
         filterValue: "",

@@ -8,19 +8,22 @@ import {
   selectLoadingData,
   selectPokemons,
 } from "../../store/data/selectors";
+import { GENERATION_ONE_URL } from "../../constants";
 import { StyledDiv } from "./PokemonListPage.style";
 
 export const PokemonListPage = () => {
   const dispatch = useDispatch();
-  const loading = useSelector((state: State) => selectLoadingData(state));
+  const notLoadedPokemons = useSelector((state: State) =>
+    selectLoadingData(state)
+  );
   const filter = useSelector((state: State) => selectFilterValue(state));
   const pokemonsList = useSelector((state: State) => selectPokemons(state));
 
   useEffect(() => {
-    if (loading) {
-      dispatch(getAllPokemons("https://pokeapi.co/api/v2/generation/1/"));
+    if (notLoadedPokemons) {
+      dispatch(getAllPokemons(GENERATION_ONE_URL));
     }
-  }, [loading, dispatch]);
+  }, [notLoadedPokemons, dispatch]);
 
   let newPokemonsArray = undefined;
   if (pokemonsList) {

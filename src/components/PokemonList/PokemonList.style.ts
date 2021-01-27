@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import image from "../../environment/assets/backgrounds.jpg";
+import { Colors } from "../../environment";
 
 export const StyledDiv = styled.div`
   background-image: url(${image});
@@ -25,11 +26,11 @@ export const DivChild = styled.div`
   height: 150px;
   max-width: 21%;
   align-self: flex-start;
-  border: 4px solid #00ccff;
+  border: 4px solid ${Colors.cyan};
   border-radius: 25%;
-  background-color: #000066;
+  background-color: ${Colors.dark_blue};
   &:hover {
     opacity: 0.5;
-    border: 4px solid #eed603;
+    border: 4px solid ${Colors.yellow};
   }
 `;
