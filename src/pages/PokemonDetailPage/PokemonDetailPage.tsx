@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import { getSelectedPokemon } from "../../store/data/actions";
 import { Title } from "../../components";
 import { State } from "../../store/data/types";
 import { PokemonDetailedCard } from "../../components";
@@ -8,6 +8,8 @@ import {
   selectLoadingSelectedPokemon,
   selectSelectedPokemon,
 } from "../../store/data/selectors";
+import { BASE_URL } from "../../constants";
+import { StyleDiv } from "./PokemonDetailPage.style";
 
 interface Props {
   match: {
@@ -19,29 +21,24 @@ interface Props {
 
 export const PokemonDetailPage = ({ match }: Props) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state: State) =>
+  const loadingSelectedPokemon = useSelector((state: State) =>
     selectLoadingSelectedPokemon(state)
   );
   const pokemonData = useSelector((state: State) =>
     selectSelectedPokemon(state)
   );
   useEffect(() => {
-    if (loading) {
-      axios
-        .get("https://pokeapi.co/api/v2/pokemon/" + match.params.name)
-        .then((response) => {
-          dispatch({ type: "GET_SELECTED_POKEMON", data: response.data });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (loadingSelectedPokemon) {
+      dispatch(getSelectedPokemon(BASE_URL + match.params.name));
     }
-  }, [match.params.name, pokemonData, dispatch, loading]);
+  }, [match.params.name, pokemonData, dispatch, loadingSelectedPokemon]);
 
   return (
     <div>
       <Title />
-      <PokemonDetailedCard selectedPokemon={pokemonData} />
+      <StyleDiv>
+        <PokemonDetailedCard selectedPokemon={pokemonData} />
+      </StyleDiv>
     </div>
   );
 };
