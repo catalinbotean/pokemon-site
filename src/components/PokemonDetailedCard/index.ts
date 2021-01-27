@@ -1,0 +1,1 @@
+export { PokemonDetailedCard } from "./PokemonDetailedCard";
